@@ -71,18 +71,20 @@ public class ReadWriteFile {
                         """.replace("$dateTime", dateTimeNow)
                 );
                 for (Clan clan : clansClass) {
-                    exportData.append("""
+                    isLastClan = (clan == clansClass.get(clansClass.size() - 1));
+                    if (!isLastClan) {
+                        // All other iterations
+                        exportData.append("""
                                     {
                                         "name": "$clanName",
                                         "active": "$clanActivity"
                                     },
                             """
-                            .replace("$clanName", clan.getName())
-                            .replace("$clanActivity", Boolean.toString(clan.getActivity()))
-                    );
-                    // Last iteration
-                    isLastClan = (clan == clansClass.get(clansClass.size() - 1));
-                    if (isLastClan) {
+                                .replace("$clanName", clan.getName())
+                                .replace("$clanActivity", Boolean.toString(clan.getActivity()))
+                        );
+                    } else {
+                        // Last iteration
                         exportData.append("""
                                     {
                                         "name": "$clanName",
@@ -101,16 +103,17 @@ public class ReadWriteFile {
                 // CSV format (Clans-Export-dateTime.csv)
                 // dateTime, clanName, activity --> per clan
                 for (Clan clan : clansClass) {
-                    exportData.append("""
-                            $dateTime,"$clanName",$activity
-                            
-                            """.replace("$dateTime", dateTimeNow)
-                            .replace("$clanName", clan.getName())
-                            .replace("$clanActivity", Boolean.toString(clan.getActivity()))
-                    );
-                    // Last iteration
                     isLastClan = (clan == clansClass.get(clansClass.size() - 1));
-                    if (isLastClan) {
+                    if (!isLastClan) {
+                        // All other iterations
+                        exportData.append("""
+                            $dateTime,"$clanName",$activity
+                            """.replace("$dateTime", dateTimeNow)
+                                .replace("$clanName", clan.getName())
+                                .replace("$clanActivity", Boolean.toString(clan.getActivity()))
+                        );
+                    } else {
+                        // Last iteration
                         exportData.append("""
                             $dateTime,"$clanName",$activity
                             """.replace("$dateTime", dateTimeNow)
