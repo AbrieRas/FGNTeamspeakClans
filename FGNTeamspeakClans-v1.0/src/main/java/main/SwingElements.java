@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SwingElements {
-    public <T extends JComponent> T createSwing (String elementType, String elementName, String elementText) {
-        switch (elementType) {
+    public <T extends JComponent> T createSwing(String elementType, String elementName, String elementText) {
+        switch(elementType) {
             case "button":
                 JButton button = new JButton(elementText);
                 button.setName("button" + elementName);
@@ -23,7 +23,7 @@ public class SwingElements {
         return null;
     }
 
-    public Component getComponentByName (Container container, String name) {
+    public Component getComponentByName(Container container, String name) {
         Component[] components = container.getComponents();
 
         for (Component component : components) {

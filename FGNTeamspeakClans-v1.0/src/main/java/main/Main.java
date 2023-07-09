@@ -47,12 +47,16 @@ public class Main {
         gui.addToGUI(emptyLabel1);
         gui.addToGUI(emptyLabel2);
 
+        // Add footer buttons & functionality below
+
         /**
-         * Button
+         * Button class
          * Param1 - String - Name of the button
          * Param2 - String - Text of the button
          * Param3 - JButton - Button object
          */
+
+        JPanel container = gui.getPanel();
 
         // Un-check all button [TOP-LEFT]
         var unCheckAllButton = new Button(
@@ -66,11 +70,11 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
                 for (String clanName : clanNames) {
                     // Change checked status of all checkboxes
-                    JPanel guiPanel = gui.getPanel();
-                    JCheckBox checkBox = (JCheckBox) swingElements.getComponentByName(guiPanel, "checkbox" + clanName);
+                    String checkBoxName = "checkbox" + clanName;
+                    JCheckBox checkBox = (JCheckBox) swingElements.getComponentByName(container, checkBoxName);
                     checkBox.setSelected(false);
                 }
-                gui.notifyUser("Successfully checked all!");
+                gui.notifyUser("Successfully un-checked all!");
             }
         });
         gui.addToGUI(unCheckAllButton.getButton());
@@ -87,11 +91,11 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
                 for (String clanName : clanNames) {
                     // Change checked status of all checkboxes
-                    JPanel guiPanel = gui.getPanel();
-                    JCheckBox checkBox = (JCheckBox) swingElements.getComponentByName(guiPanel, "checkbox" + clanName);
+                    String checkBoxName = "checkbox" + clanName;
+                    JCheckBox checkBox = (JCheckBox) swingElements.getComponentByName(container, checkBoxName);
                     checkBox.setSelected(true);
                 }
-                gui.notifyUser("Successfully un-checked all!");
+                gui.notifyUser("Successfully checked all!");
             }
         });
         gui.addToGUI(checkAllButton.getButton());
@@ -106,6 +110,15 @@ public class Main {
         );
         saveJsonButton.getButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // Update clan's activity
+                for (Clan clan: clanObjects) {
+                    String checkBoxName = "checkbox" + clan.getName();
+                    JCheckBox checkBox = (JCheckBox) swingElements.getComponentByName(container, checkBoxName);
+                    boolean checkBoxActivity = checkBox.isSelected();
+                    clan.setActivity(checkBoxActivity);
+                }
+
+                // Save to file
                 String pathToExports = System.getProperty("user.dir") + "/src/main/java/resources/exports/";
                 String fileType = "json";
                 boolean wroteDataToDatabase = fileReader.storeDataInExports(pathToExports, clanObjects, fileType);
@@ -128,6 +141,15 @@ public class Main {
         );
         saveCsvButton.getButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // Update clan's activity
+                for (Clan clan: clanObjects) {
+                    String checkBoxName = "checkbox" + clan.getName();
+                    JCheckBox checkBox = (JCheckBox) swingElements.getComponentByName(container, checkBoxName);
+                    boolean checkBoxActivity = checkBox.isSelected();
+                    clan.setActivity(checkBoxActivity);
+                }
+
+                // Save to file
                 String pathToExports = System.getProperty("user.dir") + "/src/main/java/resources/exports/";
                 String fileType = "csv";
                 boolean wroteDataToDatabase = fileReader.storeDataInExports(pathToExports, clanObjects, fileType);
@@ -153,9 +175,7 @@ public class Main {
                 )
         );
         exitButton.getButton().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0); // Terminate the application
-            }
+            public void actionPerformed(ActionEvent e) { System.exit(0); }
         });
         gui.addToGUI(exitButton.getButton());
 

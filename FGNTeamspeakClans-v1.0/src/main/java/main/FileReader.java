@@ -107,7 +107,7 @@ public class FileReader {
                     if (!isLastClan) {
                         // All other iterations
                         exportData.append("""
-                            $dateTime,"$clanName",$activity
+                            $dateTime,"$clanName",$clanActivity
                             """.replace("$dateTime", dateTimeNow)
                                 .replace("$clanName", clan.getName())
                                 .replace("$clanActivity", Boolean.toString(clan.getActivity()))
@@ -115,7 +115,7 @@ public class FileReader {
                     } else {
                         // Last iteration
                         exportData.append("""
-                            $dateTime,"$clanName",$activity
+                            $dateTime,"$clanName",$clanActivity
                             """.replace("$dateTime", dateTimeNow)
                                 .replace("$clanName", clan.getName())
                                 .replace("$clanActivity", Boolean.toString(clan.getActivity()))
