@@ -47,45 +47,64 @@ public class Main {
         gui.addToGUI(emptyLabel1);
         gui.addToGUI(emptyLabel2);
 
-        // Check all button [TOP-LEFT]
-        String buttonText = "Check All";
-        String buttonName = "buttonCheckAll";
-        JButton button = swingElements.createSwing("button", buttonName, buttonText);
-        button.addActionListener(new ActionListener() {
+        /**
+         * Button
+         * Param1 - String - Name of the button
+         * Param2 - String - Text of the button
+         * Param3 - JButton - Button object
+         */
+
+        // Un-check all button [TOP-LEFT]
+        var unCheckAllButton = new Button(
+                swingElements.createSwing(
+                        "button",
+                        "buttonUnCheckAll",
+                        "Un-check All"
+                )
+        );
+        unCheckAllButton.getButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 for (String clanName : clanNames) {
                     // Change checked status of all checkboxes
                     JPanel guiPanel = gui.getPanel();
                     JCheckBox checkBox = (JCheckBox) swingElements.getComponentByName(guiPanel, "checkbox" + clanName);
-                    checkBox.setSelected(!checkBox.isSelected());
+                    checkBox.setSelected(false);
                 }
                 gui.notifyUser("Successfully checked all!");
             }
         });
-        gui.addToGUI(button);
+        gui.addToGUI(unCheckAllButton.getButton());
 
         // Check all button [TOP-RIGHT]
-        buttonText = "Un-Check All";
-        buttonName = "buttonUnCheckAll";
-        button = swingElements.createSwing("button", buttonName, buttonText);
-        button.addActionListener(new ActionListener() {
+        var checkAllButton = new Button(
+                swingElements.createSwing(
+                        "button",
+                        "buttonCheckAll",
+                        "Check All"
+                )
+        );
+        checkAllButton.getButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 for (String clanName : clanNames) {
                     // Change checked status of all checkboxes
                     JPanel guiPanel = gui.getPanel();
                     JCheckBox checkBox = (JCheckBox) swingElements.getComponentByName(guiPanel, "checkbox" + clanName);
-                    checkBox.setSelected(!checkBox.isSelected());
+                    checkBox.setSelected(true);
                 }
                 gui.notifyUser("Successfully un-checked all!");
             }
         });
-        gui.addToGUI(button);
+        gui.addToGUI(checkAllButton.getButton());
 
         // Save as json button [BOTTOM-LEFT]
-        buttonText = "Export To JSON";
-        buttonName = "buttonExportToJSON";
-        button = swingElements.createSwing("button", buttonName, buttonText);
-        button.addActionListener(new ActionListener() {
+        var saveJsonButton = new Button(
+                swingElements.createSwing(
+                        "button",
+                        "buttonExportToJSON",
+                        "Export To JSON"
+                )
+        );
+        saveJsonButton.getButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String pathToExports = System.getProperty("user.dir") + "/src/main/java/resources/exports/";
                 String fileType = "json";
@@ -97,13 +116,17 @@ public class Main {
                 }
             }
         });
-        gui.addToGUI(button);
+        gui.addToGUI(saveJsonButton.getButton());
 
         // Save as csv button [BOTTOM-RIGHT]
-        buttonText = "Export To CSV";
-        buttonName = "buttonExportToCSV";
-        button = swingElements.createSwing("button", buttonName, buttonText);
-        button.addActionListener(new ActionListener() {
+        var saveCsvButton = new Button(
+                swingElements.createSwing(
+                        "button",
+                        "buttonExportToCSV",
+                        "Export To CSV"
+                )
+        );
+        saveCsvButton.getButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String pathToExports = System.getProperty("user.dir") + "/src/main/java/resources/exports/";
                 String fileType = "csv";
@@ -115,34 +138,28 @@ public class Main {
                 }
             }
         });
-        gui.addToGUI(button);
+        gui.addToGUI(saveCsvButton.getButton());
 
         // Add empty space before exit button
         JLabel emptyLabel3 = new JLabel();
         gui.addToGUI(emptyLabel3);
 
         // Exit button [BOTTOM-RIGHT]
-        buttonText = "Exit";
-        buttonName = "buttonExportToJSON";
-        button = swingElements.createSwing("button", buttonName, buttonText);
-        button.addActionListener(new ActionListener() {
+        var exitButton = new Button(
+                swingElements.createSwing(
+                        "button",
+                        "buttonExportToJSON",
+                        "Exit"
+                )
+        );
+        exitButton.getButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.exit(0); // Terminate the application
             }
         });
-        gui.addToGUI(button);
+        gui.addToGUI(exitButton.getButton());
 
         // Refresh the panel to update the gui
         gui.refresh();
-
-//        // Uncomment below when using export buttons
-//        String pathToExports = System.getProperty("user.dir") + "/src/main/java/resources/exports/";
-//        String fileType = "json";
-//        boolean wroteDataToDatabase = fileReader.storeDataInExports(pathToExports, clanObjects, fileType);
-//        if (wroteDataToDatabase) {
-//            System.out.println("Successfully wrote to file.");
-//        } else {
-//            System.out.println("Writing to file failed.");
-//        }
     }
 }
