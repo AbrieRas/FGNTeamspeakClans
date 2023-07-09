@@ -4,8 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ReadWriteFile {
-    public ArrayList<String> getClans(String path) {
+public class FileReader {
+    public ArrayList<String> getClansFromFile(String path) {
         ArrayList<String> data = new ArrayList<>();
         try {
             File file = new File(path);
